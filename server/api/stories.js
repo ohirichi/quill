@@ -3,7 +3,10 @@ const {Story} = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
-  Story.findAll({where: {public: true}})
+  Story.findAll({
+    where: {public: true},
+    include: [{all: true}]
+  })
     .then(stories => res.json(stories))
     .catch(next)
 })

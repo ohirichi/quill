@@ -7,7 +7,7 @@ const Part = db.define("part", {
     allowNull: false,
     unique: true
   },
-  poisition: {
+  position: {
     type: Sequelize.ENUM("subject", "setting", "problem"),
     allowNull: false
   },

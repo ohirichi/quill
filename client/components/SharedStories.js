@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-class SharedStories extends React.Component {
+
+class SharedStories extends Component {
   constructor () {
     super ();
     this.state = {
@@ -10,29 +11,33 @@ class SharedStories extends React.Component {
   }
 
   render () {
-    let stories = this.props.publicStories
-    if (this.state.category !== 'All'){
-      stories = this.prop.publicStories.filter(story => story.category.includes(this.state.selectedCategory))
-    }
-    let helper = []
-    let storyCategories = this.props.publicStories.map(story => story.category)
+    let stories = this.props.stories.publicStories
+    // if (this.state.category !== 'All'){
+    //   stories = this.props.stories.publicStories.filter(story => story.category.includes(this.state.selectedCategory))
+    // }
+    // let helper = []
+    // let storyCategories = this.props.stories.publicStories.map(story => story.category)
 
-    storyCategories.forEach (category => {
-      helper.concat(category)
-    })
+    // storyCategories.forEach (category => {
+    //   helper.concat(category)
+    // })
 
-    storyCategories = Array.from(new Set(helper))
+    // storyCategories = Array.from(new Set(helper))
+    console.log("PROPS:", this.props)
 
   return (
-    <div>
-      <div id = "story-cards-holder">
+    <div className ="container">
+      <h1>Hello?</h1>
+      <div id = "story-cards-holder" className = "row">
         {stories.map(story => {
           return (
-            <div class="card border-info mb-3" style="max-width: 20rem;">
-              <div class="card-header">{story.title}</div>
-              <div class="card-body">
-                <h4 class="card-title">Info card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div key = {story.id} className = "col-sm">
+              <div className="card border-info mb-3">
+                <div className="card-header">{story.title || "Untitled"}, by {story.user.name}</div>
+                <div className="card-body">
+                  <h4 className="card-title">{"The story of" + story.prompt.content.substring(46)}</h4>
+                  <p className="card-text">{story.content.substring(0,15)+ "..."}</p>
+                </div>
               </div>
             </div>
           )
@@ -40,8 +45,15 @@ class SharedStories extends React.Component {
       </div>
     </div>
   )
-
   }
 
 
 }
+
+
+const mapState = (state) => {
+  return {...state}
+}
+
+const mapDispatch = null
+export default connect(mapState, mapDispatch)(SharedStories)
