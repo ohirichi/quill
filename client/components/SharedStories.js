@@ -26,16 +26,18 @@ class SharedStories extends Component {
     console.log("PROPS:", this.props)
 
   return (
-    <div>
+    <div className ="container">
       <h1>Hello?</h1>
-      <div id = "story-cards-holder">
+      <div id = "story-cards-holder" className = "row">
         {stories.map(story => {
           return (
-            <div key = {story.id} className="card border-info mb-3">
-              <div className="card-header">Author: {story.user.name}</div>
-              <div className="card-body">
-                <h4 className="card-title">{story.title || story.prompt.content}</h4>
-                <p className="card-text">{story.content.substring(0,15)}</p>
+            <div key = {story.id} className = "col-sm">
+              <div className="card border-info mb-3">
+                <div className="card-header">{story.title || "Untitled"}, by {story.user.name}</div>
+                <div className="card-body">
+                  <h4 className="card-title">{"The story of" + story.prompt.content.substring(46)}</h4>
+                  <p className="card-text">{story.content.substring(0,15)+ "..."}</p>
+                </div>
               </div>
             </div>
           )
