@@ -10,7 +10,7 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Story, Prompt, Part} = require('../server/db/models')
 
 async function seed () {
   await db.sync({force: true})
@@ -22,9 +22,35 @@ async function seed () {
     User.create({email: 'cody@email.com', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'})
   ])
+
+  const parts = await Promise.all([
+    Part.create({content: "a 40 year old woman", position: "subject"}),
+    Part.create({content: "a cheerful elf", position: "subject"}),
+    Part.create({content: "an elephant that can shrink at will", position: "subject"}),
+    Part.create({content: "the 1820s", position: "setting"}),
+    Part.create({content: "a planet with no natural gravity", position: "setting"}),
+    Part.create({content: "a bright blue sea", position: "setting"}),
+    Part.create({content: "finding a secret letter", position: "problem"}),
+    Part.create({content: "the desire to find inner peace", position: "problem"}),
+    Part.create({content: "a spy chase", position: "problem"})
+  ])
+
+  const prompts = await Promise.all([
+    Prompt.create({content: "Write a story that incorporates the following: a 40 year old woman, the 1820s and finding a secret letter"}),
+    Prompt.create({content: "Write a story that incorporates the following: a cheerful elf, a planet with no natural gravity and the desire to find inner peace"}),
+    Prompt.create({content: "Write a story that incorporates the following: an elephant that can shrink at will, a bright blue sea and a spy chase"})
+  ])
+
+  const stories = await Promise.all([
+    Story.create({content:"A story that is short and sweet", prompt: "Write a story that incorporates the following: a 40 year old woman, the 1820s and finding a secret letter"}),
+    Story.create({content: "Another story that hits every aspect of the wonderful prompt", prompt: "Write a story that incorporates the following: a cheerful elf, a lanet with no natural gravity and the desire to find inner peace" })
+  ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${stories.length} stories`)
+  console.log(`seeded ${prompts.length} prompts`)
+  console.log(`seeded ${parts.length} parts`)
   console.log(`seeded successfully`)
 }
 

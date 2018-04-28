@@ -1,5 +1,5 @@
 {
-  "name": "boilermaker",
+  "name": "quill",
   "version": "1.0.0",
   "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
@@ -57,7 +57,7 @@
     "chai": "^3.5.0",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
-    "eslint": "^4.10.0",
+    "eslint": "^4.19.1",
     "eslint-config-fullstack": "^3.0.0",
     "eslint-plugin-react": "^7.4.0",
     "mocha": "^3.3.0",
