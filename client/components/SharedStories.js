@@ -31,7 +31,7 @@ class SharedStories extends Component {
       <div id = "story-cards-holder" className = "row">
         {stories.map(story => {
           return (
-            <div key = {story.id} className = "col-sm">
+            <div key = {story.id} className = "col-lg-4">
               <div className="card border-info mb-3">
                 <div className="card-header">{story.title || "Untitled"}, by {story.user.name}</div>
                 <div className="card-body">
