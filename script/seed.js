@@ -19,8 +19,9 @@ async function seed () {
   // executed until that promise resolves!
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({name: "cody", email: 'cody@email.com', password: '123'}),
+    User.create({name: "murphy", email: 'murphy@email.com', password: '123'}),
+    User.create({name: "amy", email: 'amy@email.com', password: '123'})
   ])
 
   const parts = await Promise.all([
@@ -42,8 +43,12 @@ async function seed () {
   ])
 
   const stories = await Promise.all([
-    Story.create({content:"A story that is short and sweet", prompt: "Write a story that incorporates the following: a 40 year old woman, the 1820s and finding a secret letter"}),
-    Story.create({content: "Another story that hits every aspect of the wonderful prompt", prompt: "Write a story that incorporates the following: a cheerful elf, a lanet with no natural gravity and the desire to find inner peace" })
+    Story.create({content:"A story that is short and sweet", public: true, userId: 1, promptId: 1}),
+    Story.create({content: "Another story that hits every aspect of the wonderful prompt", public: true, userId: 1, promptId: 2 }),
+    Story.create({content: "Lorem ipsum", public: true, userId: 3, promptId: 3}),
+    Story.create({content: "Lorem ipsum", userId: 2, promptId: 3}),
+    Story.create({content: "Lorem ipsum another time", public: true, userId: 1, promptId: 3})
+
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
