@@ -5,9 +5,10 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {StreakBadge} from '../components';
 
+
 const Navbar = ({ handleClick, isLoggedIn, user, streak }) => (
   <div>
-    <div id="header"><h1>Quill: <span className="text-muted" >Break the Block</span></h1></div>
+    <div id="header"><h1> <img src="quill-icon-22.png" />Quill: <span className="text-muted" >Break the Block</span></h1></div>
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark" id="nav">
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon" />
