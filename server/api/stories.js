@@ -13,18 +13,20 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Story.create(req.body)
+    .then(story => Story.findOne({where: {id: story.id}, include:[{all:true}]}))
     .then(story => res.json(story))
     .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {
-  Story.findById(req.params.id)
+  Story.findOne({where: {id: req.params.id}, include: [{all: true}]})
     .then(story => res.json(story))
     .catch(next)
 })
 
 router.put('/:id', (req, res, next) => {
-  Story.update(req.body, {where: {id: req.params.id}})
+  Story.findOne({where: {id: req.params.id}})
+    .then(story => story.update(req.body))
     .then(story => res.json(story))
     .catch(next)
 })

@@ -12,11 +12,13 @@ const REMOVE_USER = 'REMOVE_USER'
  */
 const defaultUser = {}
 
+
 /**
  * ACTION CREATORS
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+
 
 /**
  * THUNK CREATORS
@@ -28,9 +30,9 @@ export const me = () =>
         dispatch(getUser(res.data || defaultUser)))
       .catch(err => console.log(err))
 
-export const auth = (email, password, method) =>
+export const auth = (email, password, name, method) =>
   dispatch =>
-    axios.post(`/auth/${method}`, { email, password })
+    axios.post(`/auth/${method}`, { email, password, name })
       .then(res => {
         dispatch(getUser(res.data))
         history.push('/home')
@@ -47,6 +49,7 @@ export const logout = () =>
         history.push('/login')
       })
       .catch(err => console.log(err))
+
 
 /**
  * REDUCER

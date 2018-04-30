@@ -43,7 +43,7 @@ export const getAllSharedStories = () =>
 
 export const getAllUserStories = (userId) =>
   dispatch =>
-    axios.get(`/api/${userId}/stories`)
+    axios.get(`/api/users/${userId}/stories`)
       .then(res => res.data)
       .then(stories => dispatch(getUserStories(stories)))
       .catch(err => console.log(err))
@@ -59,7 +59,11 @@ export const updateStory = (story) =>
   dispatch =>
     axios.put(`/api/stories/${story.id}`, story)
       .then(res => res.data)
-      .then(updatedStory => dispatch(editStory(updatedStory)))
+      .then(updatedStory => {
+        console.log("updatedStory", updatedStory)
+        dispatch(editStory(updatedStory))
+        window.location = `/user/${updatedStory.userId}/stories`
+      })
       .catch(err => console.log(err))
 
 export const removeStory = (story) =>
@@ -70,9 +74,13 @@ export const removeStory = (story) =>
 
 export const submitStory = (story) =>
   dispatch =>
-    axios.post('/stories', story)
-      .then(res => res.data)
-      .then(newStory => dispatch(addStory(newStory)))
+    axios.post('/api/stories', story)
+      .then(res =>  res.data)
+      .then(newStory => {
+        console.log("newStory:", newStory)
+        dispatch(addStory(newStory))
+        window.location = `/user/${newStory.userId}/stories`
+      })
       .catch(err => console.log(err))
 
 

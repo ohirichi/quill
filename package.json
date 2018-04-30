@@ -1,11 +1,12 @@
 {
   "name": "quill",
   "version": "1.0.0",
+  "homepage": "./",
   "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
     "node": ">= 7.0.0"
   },
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
@@ -13,7 +14,7 @@
     "lint": "eslint ./ --ignore-path .gitignore",
     "postinstall": "touch secrets.js",
     "seed": "node script/seed.js",
-    "start": "node server",
+    "start": "electron .",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
     "test": "NODE_ENV='test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require @babel/polyfill --require @babel/register"
@@ -28,6 +29,7 @@
     "express": "^4.14.1",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
+    "moment": "^2.22.1",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
@@ -55,6 +57,7 @@
     "babel-eslint": "^8.0.1",
     "babel-loader": "^8.0.0-beta.2",
     "chai": "^3.5.0",
+    "electron": "^1.8.6",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
     "eslint": "^4.19.1",

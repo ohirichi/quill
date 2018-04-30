@@ -9,7 +9,6 @@ const App = () => {
     <div>
       <Navbar />
       <Routes />
-      <Link to ="/read">Read</Link>
     </div>
   )
 }

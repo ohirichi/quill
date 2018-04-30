@@ -10,20 +10,27 @@ const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
+    <div className="container" >
       <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email"><small>Email</small></label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password"><small>Password</small></label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
+        <fieldset>
+          {name === 'signup' &&
+          <div className="form-group">
+            <label htmlFor="username">Username : </label>
+            <input className="form-control" name="username" type="text" />
+          </div>}
+          <div className="form-group">
+            <label htmlFor="email">Email : </label>
+            <input className="form-control" name="email" type="text" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password : </label>
+            <input className="form-control" name="password" type="password" />
+          </div>
+          <div>
+            <button type="submit">{displayName}</button>
+          </div>
+          {error && error.response && <div> {error.response.data} </div>}
+        </fieldset>
       </form>
       <a href="/auth/google">{displayName} with Google</a>
     </div>
@@ -58,9 +65,13 @@ const mapDispatch = (dispatch) => {
     handleSubmit (evt) {
       evt.preventDefault()
       const formName = evt.target.name
+      let userName;
+      if (formName === 'signup'){
+        userName = evt.target.username.value
+      }
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      dispatch(auth(email, password, userName, formName))
     }
   }
 }

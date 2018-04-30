@@ -50,6 +50,13 @@ User.prototype.correctPassword = function (candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
+User.prototype.updateStreak = function () {
+  console.log('streak initial:', this.streak)
+  this.streak = this.streak + 1;
+  console.log('streak updated to: ', this.streak)
+  return this;
+}
+
 /**
  * classMethods
  */
