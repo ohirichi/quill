@@ -13,6 +13,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Story.create(req.body)
+    .then(story => Story.findOne({where: {id: story.id}, include:[{all:true}]}))
     .then(story => res.json(story))
     .catch(next)
 })

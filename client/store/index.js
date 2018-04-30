@@ -5,8 +5,9 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import stories from './stories'
 import prompt from './prompts'
+import streak from './streak'
 
-const reducer = combineReducers({user, stories, prompt})
+const reducer = combineReducers({user, streak, stories, prompt})
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
   createLogger({collapsed: true})
@@ -17,3 +18,4 @@ export default store
 export * from './user'
 export * from './stories'
 export * from './prompts'
+export * from './streak'

@@ -62,7 +62,7 @@ export const updateStory = (story) =>
       .then(updatedStory => {
         console.log("updatedStory", updatedStory)
         dispatch(editStory(updatedStory))
-        history.push(`/user/${updatedStory.userId}/stories`)
+        window.location = `/user/${updatedStory.userId}/stories`
       })
       .catch(err => console.log(err))
 
@@ -74,9 +74,13 @@ export const removeStory = (story) =>
 
 export const submitStory = (story) =>
   dispatch =>
-    axios.post('/stories', story)
-      .then(res => res.data)
-      .then(newStory => dispatch(addStory(newStory)))
+    axios.post('/api/stories', story)
+      .then(res =>  res.data)
+      .then(newStory => {
+        console.log("newStory:", newStory)
+        dispatch(addStory(newStory))
+        window.location = `/user/${newStory.userId}/stories`
+      })
       .catch(err => console.log(err))
 
 

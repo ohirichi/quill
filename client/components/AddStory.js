@@ -1,30 +1,41 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {updateStory, editStreak, me} from '../store';
+import {getNewPrompt, submitStory, editStreak, me} from '../store';
 import {noTime} from '../../utils'
 
-class EditStory extends Component {
+class AddStory extends Component {
   constructor () {
     super();
     this.state = {
-
+      prompt: {}
     }
   }
 
+  componentDidMount(){
+    this.props.getNewPrompt();
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (this.props !== nextProps){
+      console.log("this props", this.props)
+      console.log("next props", nextProps.prompt.prompt)
+      this.setState({prompt: nextProps.prompt.prompt})
+    }
+  }
 
   render (){
-    const story = this.props.story
+    const prompt = this.state.prompt
     console.log("STORY:", this.props.story)
     return (
     <div className="container" >
-      <form onSubmit={(event) => this.props.handleSubmit(event, this.props.user)} >
+      <form onSubmit={(event) => this.props.handleSubmit(event, this.props.user, prompt)} >
         <fieldset>
-          <legend>Editing story#{story.id}</legend>
+          <legend>New Story</legend>
           <div className="form-group row">
             <label className="col-md-2 col-form-label">Prompt: </label>
             <div className="col-lg-7">
-              <p>{story && story.prompt ? story.prompt.content : "UNKOWN PROMPT"}</p>
+              <p>{prompt && prompt.id ? prompt.content : "UNKOWN PROMPT"}</p>
             </div>
           </div>
           <div className="form-group">
@@ -35,7 +46,7 @@ class EditStory extends Component {
 
           <div className="form-group">
             <label htmlFor="storyContent">Story:</label>
-            <textarea className="form-control" name="storyContent" rows="10" defaultValue={story.content} ></textarea>
+            <textarea className="form-control" name="storyContent" rows="10" ></textarea>
           </div>
 
           <fieldset className="form-group">
@@ -52,7 +63,6 @@ class EditStory extends Component {
                 No
               </label>
             </div>
-            <input type="hidden" name="id" value={story.id} />
 
           <button type="submit" className="btn btn-primary">Submit</button>
         </fieldset>
@@ -63,31 +73,30 @@ class EditStory extends Component {
 }
 
 const mapState = (state) => {
-  return { story: state.stories.story, user: state.user}
+  return { prompt: state.prompt, user: state.user}
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit (event, user) {
+    handleSubmit (event, user, prompt) {
     event.preventDefault();
-    const id = event.target.id.value;
+    const promptId = prompt.id;
+    const userId = user.id
     const title = event.target.storyTitle.value;
     const content = event.target.storyContent.value;
     let isPublic;
     event.target.setPublic.value === 'Yes' ? isPublic = true : isPublic = false;
-    const updatedStory = { id, title, content, isPublic}
-    dispatch(updateStory(updatedStory))
+    const newStory = { userId, promptId, title, content, isPublic}
+    dispatch(submitStory(newStory))
     const currentTime = new Date()
     if (!user.lastSubmit || noTime(user.lastSubmit) > noTime(currentTime)){
       dispatch(editStreak(user.id))
     }
-    // else {
-    //   console.log("user in the else:", user)
-    // }
-
-
+    },
+    getNewPrompt () {
+      dispatch(getNewPrompt())
     }
   }
 }
 
-export default connect(mapState, mapDispatch)(EditStory)
+export default connect(mapState, mapDispatch)(AddStory)

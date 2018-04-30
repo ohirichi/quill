@@ -36,7 +36,7 @@ router.put('/:id', (req, res, next) => {
     .then(user => user.update({lastSubmit: new Date(), streak: user.streak + 1 }))
     .then(user => {
       console.log("User streak:", user.streak)
-      res.json(user)}
+      res.json(user.streak)}
     )
     .catch(next)
 })

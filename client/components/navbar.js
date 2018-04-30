@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {StreakBadge} from '../components';
 
-const Navbar = ({ handleClick, isLoggedIn, user }) => (
+const Navbar = ({ handleClick, isLoggedIn, user, streak }) => (
   <div>
     <div id="header"><h1>Quill: <span className="text-muted" >Break the Block</span></h1></div>
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark" id="nav">
@@ -26,7 +27,7 @@ const Navbar = ({ handleClick, isLoggedIn, user }) => (
         </ul>
 
         {isLoggedIn ? ( <ul className = "navbar-nav my-2 my-lg-0">
-            <li className= "nav-link" ><a href='/home'><span className="badge badge-pill badge-info"> streak: {user.streak}</span></a></li>
+            <li className= "nav-link" ><StreakBadge /></li>
             <li className = "nav-link"> | </li>
             <li><a className= "nav-link" href="#" onClick={handleClick}>
               Logout
@@ -52,7 +53,8 @@ const Navbar = ({ handleClick, isLoggedIn, user }) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    user: state.user
+    user: state.user,
+    streak: state.user.streak
   }
 }
 

@@ -2,16 +2,18 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, StoryList, Story, EditStory} from './components'
-import {me, getAllSharedStories} from './store'
+import {Login, Signup, UserHome, StoryList, Story, EditStory, AddStory} from './components'
+import {me, getAllSharedStories, addStreak } from './store'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
+
   componentDidMount () {
     this.props.loadInitialData()
   }
+
 
   render () {
     const {isLoggedIn} = this.props
@@ -24,11 +26,13 @@ class Routes extends Component {
         <Route path="/read" component={StoryList} />
         <Route path="/stories/:storyId/edit" component={EditStory} />
         <Route path = "/stories/:storyId" component={Story} />
+        <Route path = "/user/:id/stories/add" component={AddStory} />
         <Route path = "/user/:id/stories" component={StoryList} />
         {
           isLoggedIn &&
             <Switch>
               {/* Routes placed here are only available after logging in */}
+              <Route path="/" component={UserHome} />
               <Route path="/home" component={UserHome} />
 
             </Switch>
@@ -55,6 +59,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(addStreak())
       dispatch(getAllSharedStories())
     }
   }
